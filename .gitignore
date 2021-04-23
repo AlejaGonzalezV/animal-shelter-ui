@@ -35,5 +35,6 @@ yarn-error.log*
 .vercel
 
 #Contract
-test\contract\logs
-test\contract\pacts
+test/contract/logs
+test/contract/pacts
+
