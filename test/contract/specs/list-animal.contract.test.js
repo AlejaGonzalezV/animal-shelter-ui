@@ -15,13 +15,14 @@ describe('Given An Animal service', () => {
                 },
                 willRespondWith: {
                     status: 200,
-                    body: Matchers.eachLike({
-                        breed: Matchers.like("Bengali"),
-                        gender: Matchers.term({generate: "Female", matcher: "Female|Male"}),
-                        isVaccinated: Matchers.boolean(true),
+                    body: Matchers.eachLike(
+                        {
                         name: Matchers.string("Manchas"),
-                        vaccines: Matchers.eachLike(["rabia"], {min: 1})
-                    }, {min: 1})
+                        breed: Matchers.like("Bengali"),
+                        gender: Matchers.like("Female"),
+                        vaccinated: Matchers.boolean(true),
+                        }
+                    )
                 }
             });
         });
