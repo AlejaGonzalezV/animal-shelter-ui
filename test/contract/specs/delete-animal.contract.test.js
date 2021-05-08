@@ -3,32 +3,25 @@ import { AnimalController } from "../../../controllers";
 import { Matchers } from "@pact-foundation/pact";
 
 describe('Given An Animal service', () => {
-    describe('When a request to list all the animals is made', () => {
+    describe('When a request to create an animal is made', () => {
+        var petname = "Lulo"
         beforeAll(async () => {
             await provider.setup();
             await provider.addInteraction({
-                state: 'there are animals',
-                uponReceiving: 'a request to get all animals',
+                state: 'delete animal',
+                uponReceiving: 'a request to delete an animal',
                 withRequest: {
-                    method: 'GET',
-                    path: '/animals'
+                    method: 'DELETE',
+                    path: `/animals/${petname}`,
                 },
                 willRespondWith: {
-                    status: 200,
-                    body: Matchers.eachLike(
-                        {
-                        name: Matchers.string("Manchas"),
-                        breed: Matchers.like("Bengali"),
-                        gender: Matchers.like("Female"),
-                        vaccinated: Matchers.boolean(true),
-                        }
-                    )
+                    status: 204
                 }
             });
         });
 
         it("Then it should return the right data", async() =>{
-            const response = await AnimalController.list();
+            const response = await AnimalController.delete(petname);
             expect(response.data).toMatchSnapshot();
             await provider.verify();
         });
